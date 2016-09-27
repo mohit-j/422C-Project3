@@ -20,7 +20,7 @@ public class Main {
 	
 	public static Set<String> words;
 	public static ArrayList<String> input;
-	public static ArrayList<String> bfsQueue;
+	public static Queue<Node> bfsQueue;
 	public static Set<String> markedWords;
 	
 	public static void main(String[] args) throws Exception {
@@ -51,7 +51,7 @@ public class Main {
 		if(input != null)
 			input.clear();
 		input = parse(keyboard);
-		bfsQueue = new ArrayList<String>();
+		bfsQueue = new LinkedList();
 		markedWords = new HashSet<String>();
 	}
 	
@@ -120,5 +120,15 @@ public class Main {
 		if(a.substring(0,1).equals(b.substring(0,1)) && a.substring(1,2).equals(b.substring(1,2)) && a.substring(2,3).equals(b.substring(2,3)) && a.substring(3,4).equals(b.substring(3,4)) && !a.substring(4,5).equals(b.substring(4,5)))
 			return true;
 		return false;
+	}
+	
+	/**
+	 * This function performs the depth first search and returns a node containing the end word and a path back to the root
+	 * @param end the word to search for
+	 * @return node containing parent nodes back to root
+	 */
+	public static Node breadthFirstSearch(String end){
+		
+		return null;
 	}
 }
