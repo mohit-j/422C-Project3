@@ -20,6 +20,8 @@ public class Main {
 	
 	public static Set<String> words;
 	public static ArrayList<String> input;
+	public static ArrayList<String> bfsQueue;
+	public static Set<String> markedWords;
 	
 	public static void main(String[] args) throws Exception {
 		
@@ -49,6 +51,8 @@ public class Main {
 		if(input != null)
 			input.clear();
 		input = parse(keyboard);
+		bfsQueue = new ArrayList<String>();
+		markedWords = new HashSet<String>();
 	}
 	
 	/**
