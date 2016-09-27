@@ -7,7 +7,7 @@
  * <Student2 EID>
  * <Student2 5-digit Unique No.>
  * Slip days used: <0>
- * Git URL: https://github.com/mohit-j/422C-project-3.git
+ * Git URL: https://github.com/mohit-j/422C-Project3.git
  * Fall 2016
  */
 
@@ -18,7 +18,8 @@ import java.io.*;
 
 public class Main {
 	
-	// static variables and constants only here.
+	public static Set<String> words;
+	public static ArrayList<String> input;
 	
 	public static void main(String[] args) throws Exception {
 		
@@ -28,20 +29,22 @@ public class Main {
 		if (args.length != 0) {
 			kb = new Scanner(new File(args[0]));
 			ps = new PrintStream(new File(args[1]));
-			System.setOut(ps);			// redirect output to ps
+			System.setOut(ps);					// redirect output to ps
 		} else {
-			kb = new Scanner(System.in);// default from Stdin
-			ps = System.out;			// default to Stdout
+			kb = new Scanner(System.in);		// default from Stdin
+			ps = System.out;					// default to Stdout
 		}
-		initialize();
 		
-		// TODO methods to read in words, output ladder
+		initialize(kb);
+		System.out.println(input.toString());
 	}
 	
-	public static void initialize() {
-		// initialize your static variables or constants here.
-		// We will call this method before running our JUNIT tests.  So call it 
-		// only once at the start of main.
+	public static void initialize(Scanner keyboard) {
+		
+		words = makeDictionary();
+		if(input != null)
+			input.clear();
+		input = parse(keyboard);
 	}
 	
 	/**
@@ -50,26 +53,28 @@ public class Main {
 	 * If command is /quit, return empty ArrayList. 
 	 */
 	public static ArrayList<String> parse(Scanner keyboard) {
-		// TO DO
-		return null;
+		
+		ArrayList<String> in = new ArrayList<String>();
+		while(in.size() < 2)
+		{
+			in.add(keyboard.next());
+		}
+		
+		return in;
 	}
 	
 	public static ArrayList<String> getWordLadderDFS(String start, String end) {
 		
 		// Returned list should be ordered start to end.  Include start and end.
 		// Return empty list if no ladder.
-		// TODO some code
-		Set<String> dict = makeDictionary();
-		// TODO more code
 		
 		return null; // replace this line later with real return
 	}
 	
     public static ArrayList<String> getWordLadderBFS(String start, String end) {
 		
-		// TODO some code
-		Set<String> dict = makeDictionary();
-		// TODO more code
+    	// Returned list should be ordered start to end.  Include start and end.
+    	// Return empty list if no ladder.
 		
 		return null; // replace this line later with real return
 	}
