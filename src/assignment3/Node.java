@@ -8,7 +8,12 @@ public class Node {
 		word = "";
 		parent = null;
 	}
-
+	
+	public Node(String root){
+		word = root;
+		parent = null;
+	}
+	
 	public Node(String w, Node p){
 		word = "";
 		word += w.toUpperCase();

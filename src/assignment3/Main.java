@@ -127,8 +127,11 @@ public class Main {
 	 * @param end the word to search for
 	 * @return node containing parent nodes back to root
 	 */
-	public static Node breadthFirstSearch(String end){
+	public static Node breadthFirstSearch(String start, String end){
 		
+		Node root = new Node(start);
+		bfsQueue.add(root);
+		Iterator queueIndex = bfsQueue.iterator();
 		return null;
 	}
 }
