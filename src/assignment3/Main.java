@@ -132,6 +132,21 @@ public class Main {
 		Node root = new Node(start);
 		bfsQueue.add(root);
 		Iterator queueIndex = bfsQueue.iterator();
+<<<<<<< HEAD
+=======
+		while(queueIndex.hasNext()){
+			Node current = (Node) queueIndex.next();
+			if(!markedWords.contains(current.word)){	//if its not already been checked
+				if(current.word == end){				//if it equals the end word, return it
+					return current;	
+				}
+				for(int i = 0; i < hashmap.get(current.word).length; i++){		//replace hashmap with name of hashmap containing string key arraylist<string> values
+					bfsQueue.add(new Node(hashmap.get(current.word).get(i), current));				//add every neighbor to the queue
+				}
+			}
+			bfsQueue.remove();
+		}
+>>>>>>> preHashMap
 		return null;
 	}
 }
