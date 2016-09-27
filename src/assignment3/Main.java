@@ -132,8 +132,6 @@ public class Main {
 		Node root = new Node(start);
 		bfsQueue.add(root);
 		Iterator queueIndex = bfsQueue.iterator();
-<<<<<<< HEAD
-=======
 		while(queueIndex.hasNext()){
 			Node current = (Node) queueIndex.next();
 			if(!markedWords.contains(current.word)){	//if its not already been checked
@@ -146,7 +144,6 @@ public class Main {
 			}
 			bfsQueue.remove();
 		}
->>>>>>> preHashMap
 		return null;
 	}
 }
