@@ -42,7 +42,8 @@ public class Main {
 		generateNeighbors();
 		
 //		System.out.println(neighbors.get("HOSTS").toString());
-		printLadder(getWordLadderDFS("SMART", "MONEY"));
+		printLadder(getWordLadderDFS(input.get(0), input.get(1)));
+		
 	}
 	
 	public static void initialize(Scanner keyboard) {
@@ -80,15 +81,14 @@ public class Main {
 		// Returned list should be ordered start to end.  Include start and end.
 		// Return empty list if no ladder.
 		
-		if(words.size() < 2)
-			return new ArrayList<String>();
-		
-		ArrayList<String> output = new ArrayList<String>();
-		
-		if(start.equals(end))
-			return output;
-		
-		return null; // replace this line later with real return
+		Node bottom = depthFirstSearch(new Node(start), end);
+		ArrayList<String> ladder = new ArrayList<String>();
+		Node temp = bottom;
+		while(temp != null){
+			ladder.add(0, temp.word);
+			temp = temp.parent;
+		}
+		return ladder; 
 	}
 	
     public static ArrayList<String> getWordLadderBFS(String start, String end) {
@@ -185,6 +185,26 @@ public class Main {
 				}
 			}
 		}
+		return null;
+	}
+	
+	public static Node depthFirstSearch(Node start, String end) {
+		
+		markedWords.add(start.word);
+		
+		if(start.word.equals(end))
+			return start;
+		else if(markedWords.size() == words.size())
+			return null;
+		
+		for(String s : neighbors.get(start.word))
+			if(!markedWords.contains(s))
+			{
+				Node n = depthFirstSearch(new Node(s, start), end);
+				if(n == null)
+					continue;
+				return n;
+			}
 		return null;
 	}
 }
