@@ -41,8 +41,8 @@ public class Main {
 		initialize(kb);
 		generateNeighbors();
 		
-		System.out.println(neighbors.get("HOSTS").toString());
-		
+//		System.out.println(neighbors.get("HOSTS").toString());
+		printLadder(getWordLadderDFS("SMART", "MONEY"));
 	}
 	
 	public static void initialize(Scanner keyboard) {
@@ -79,8 +79,14 @@ public class Main {
 		
 		// Returned list should be ordered start to end.  Include start and end.
 		// Return empty list if no ladder.
-		
-		return null; // replace this line later with real return
+		Node bottom = breadthFirstSearch(start, end);
+		ArrayList<String> ladder = new ArrayList<String>();
+		Node temp = bottom;
+		while(temp != null){
+			ladder.add(0, temp.word);
+			temp = temp.parent;
+		}
+		return ladder; // replace this line later with real return
 	}
 	
     public static ArrayList<String> getWordLadderBFS(String start, String end) {
@@ -159,17 +165,17 @@ public class Main {
 		Node root = new Node(start);
 		bfsQueue.add(root);
 		Iterator queueIndex = bfsQueue.iterator();
-		while(queueIndex.hasNext()){
-			Node current = (Node) queueIndex.next();
+		while(!bfsQueue.isEmpty()){
+			Node current = bfsQueue.poll();
 			if(!markedWords.contains(current.word)){	//if its not already been checked
-				if(current.word == end){				//if it equals the end word, return it
+				markedWords.add(current.word);
+				if(current.word.equals(end)){				//if it equals the end word, return it
 					return current;	
 				}
-				for(int i = 0; i < neighbors.get(current.word).length; i++){		//replace hashmap with name of hashmap containing string key arraylist<string> values
-					bfsQueue.add(new Node(neighbors.get(current.word).get(i), current));				//add every neighbor to the queue
+				for(String s : neighbors.get(current.word)){		//replace hashmap with name of hashmap containing string key arraylist<string> values
+					bfsQueue.add(new Node(s, current));				//add every neighbor to the queue
 				}
 			}
-			bfsQueue.remove();
 		}
 		return null;
 	}
