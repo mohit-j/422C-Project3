@@ -22,6 +22,7 @@ public class Main {
 	public static ArrayList<String> input;
 	public static Queue<Node> bfsQueue;
 	public static Set<String> markedWords;
+	public static HashMap<String, HashSet<String>> neighbors;
 	
 	public static void main(String[] args) throws Exception {
 		
@@ -38,21 +39,21 @@ public class Main {
 		}
 		
 		initialize(kb);
+		generateNeighbors();
 		
-		if(isConnected(input.get(0), input.get(1)))
-			System.out.println("Connected");
-		else
-			System.out.println("Not Connected");
+		System.out.println(neighbors.get("HOSTS").toString());
+		
 	}
 	
 	public static void initialize(Scanner keyboard) {
 		
-		words = makeDictionary();
-		if(input != null)
+		if(input!=null && !input.isEmpty())
 			input.clear();
 		input = parse(keyboard);
-		bfsQueue = new LinkedList();
+		words = makeDictionary();
+		bfsQueue = new LinkedList<Node>();
 		markedWords = new HashSet<String>();
+		neighbors = new HashMap<String, HashSet<String>>();
 	}
 	
 	/**
@@ -63,10 +64,13 @@ public class Main {
 	public static ArrayList<String> parse(Scanner keyboard) {
 		
 		ArrayList<String> in = new ArrayList<String>();
-		while(in.size() < 2)
-		{
+		do {
+			
 			in.add(keyboard.next());
-		}
+			if(in.get(0).equals("/quit"))
+				System.exit(1);
+			
+		} while(in.size() < 2);
 		
 		return in;
 	}
@@ -107,19 +111,32 @@ public class Main {
 		
 	}
 	
-	public static boolean isConnected(String a, String b) {
+	public static void generateNeighbors() {
 		
-		if(!a.substring(0,1).equals(b.substring(0,1)) && a.substring(1,2).equals(b.substring(1,2)) && a.substring(2,3).equals(b.substring(2,3)) && a.substring(3,4).equals(b.substring(3,4)) && a.substring(4,5).equals(b.substring(4,5)))
-			return true;
-		if(a.substring(0,1).equals(b.substring(0,1)) && !a.substring(1,2).equals(b.substring(1,2)) && a.substring(2,3).equals(b.substring(2,3)) && a.substring(3,4).equals(b.substring(3,4)) && a.substring(4,5).equals(b.substring(4,5)))
-			return true;
-		if(a.substring(0,1).equals(b.substring(0,1)) && a.substring(1,2).equals(b.substring(1,2)) && !a.substring(2,3).equals(b.substring(2,3)) && a.substring(3,4).equals(b.substring(3,4)) && a.substring(4,5).equals(b.substring(4,5)))
-			return true;
-		if(a.substring(0,1).equals(b.substring(0,1)) && a.substring(1,2).equals(b.substring(1,2)) && a.substring(2,3).equals(b.substring(2,3)) && !a.substring(3,4).equals(b.substring(3,4)) && a.substring(4,5).equals(b.substring(4,5)))
-			return true;
-		if(a.substring(0,1).equals(b.substring(0,1)) && a.substring(1,2).equals(b.substring(1,2)) && a.substring(2,3).equals(b.substring(2,3)) && a.substring(3,4).equals(b.substring(3,4)) && !a.substring(4,5).equals(b.substring(4,5)))
-			return true;
-		return false;
+		if(neighbors!=null && !neighbors.isEmpty())
+			neighbors.clear();
+		
+		for(String s : words)
+		{
+		    HashSet<String> nlist = new HashSet<String>();
+		    for(int i=0; i<5; i++)
+		    {
+				String test = s;
+		    	for(int j=1; j<26; j++)
+		    	{
+		    		if(test.charAt(i) == 'Z')
+		    			test = test.substring(0, i) + 'A' + test.substring(i+1, s.length());	
+		    		else
+		    			test = test.substring(0, i) + (char)(test.charAt(i)+1) + test.substring(i+1, s.length());
+		    		
+		    		if(words.contains(test))
+		    		{
+		    			nlist.add(test);
+		    		}
+		    	}
+		    }
+		    neighbors.put(s, nlist);
+		}
 	}
 	
 	/**
@@ -138,8 +155,8 @@ public class Main {
 				if(current.word == end){				//if it equals the end word, return it
 					return current;	
 				}
-				for(int i = 0; i < hashmap.get(current.word).length; i++){		//replace hashmap with name of hashmap containing string key arraylist<string> values
-					bfsQueue.add(new Node(hashmap.get(current.word).get(i), current));				//add every neighbor to the queue
+				for(int i = 0; i < neighbors.get(current.word).length; i++){		//replace hashmap with name of hashmap containing string key arraylist<string> values
+					bfsQueue.add(new Node(neighbors.get(current.word).get(i), current));				//add every neighbor to the queue
 				}
 			}
 			bfsQueue.remove();
