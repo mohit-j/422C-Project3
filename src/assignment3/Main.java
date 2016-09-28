@@ -67,7 +67,7 @@ public class Main {
 		do {
 			
 			in.add(keyboard.next().toUpperCase());
-			if(in.get(0).equals("/QUIT"))
+			if(in.get(0).equals("/QUIT") || (in.size()>1 && in.get(1).equals("/QUIT")))
 				System.exit(1);
 			
 		} while(in.size() < 2);
@@ -79,14 +79,16 @@ public class Main {
 		
 		// Returned list should be ordered start to end.  Include start and end.
 		// Return empty list if no ladder.
-		Node bottom = breadthFirstSearch(start, end);
-		ArrayList<String> ladder = new ArrayList<String>();
-		Node temp = bottom;
-		while(temp != null){
-			ladder.add(0, temp.word);
-			temp = temp.parent;
-		}
-		return ladder; // replace this line later with real return
+		
+		if(words.size() < 2)
+			return new ArrayList<String>();
+		
+		ArrayList<String> output = new ArrayList<String>();
+		
+		if(start.equals(end))
+			return output;
+		
+		return null; // replace this line later with real return
 	}
 	
     public static ArrayList<String> getWordLadderBFS(String start, String end) {
@@ -94,7 +96,14 @@ public class Main {
     	// Returned list should be ordered start to end.  Include start and end.
     	// Return empty list if no ladder.
 		
-		return null; // replace this line later with real return
+    	Node bottom = breadthFirstSearch(start, end);
+		ArrayList<String> ladder = new ArrayList<String>();
+		Node temp = bottom;
+		while(temp != null){
+			ladder.add(0, temp.word);
+			temp = temp.parent;
+		}
+		return ladder; // replace this line later with real return
 	}
     
 	public static Set<String>  makeDictionary () {
@@ -164,7 +173,6 @@ public class Main {
 		
 		Node root = new Node(start);
 		bfsQueue.add(root);
-		Iterator queueIndex = bfsQueue.iterator();
 		while(!bfsQueue.isEmpty()){
 			Node current = bfsQueue.poll();
 			if(!markedWords.contains(current.word)){	//if its not already been checked
@@ -172,7 +180,7 @@ public class Main {
 				if(current.word.equals(end)){				//if it equals the end word, return it
 					return current;	
 				}
-				for(String s : neighbors.get(current.word)){		//replace hashmap with name of hashmap containing string key arraylist<string> values
+				for(String s : neighbors.get(current.word)){		
 					bfsQueue.add(new Node(s, current));				//add every neighbor to the queue
 				}
 			}
