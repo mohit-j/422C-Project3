@@ -66,8 +66,8 @@ public class Main {
 		ArrayList<String> in = new ArrayList<String>();
 		do {
 			
-			in.add(keyboard.next());
-			if(in.get(0).equals("/quit"))
+			in.add(keyboard.next().toUpperCase());
+			if(in.get(0).equals("/QUIT"))
 				System.exit(1);
 			
 		} while(in.size() < 2);
@@ -109,6 +109,16 @@ public class Main {
 	
 	public static void printLadder(ArrayList<String> ladder) {
 		
+		if(ladder == null || ladder.isEmpty())
+		{
+			System.out.println("no word ladder can be found between " + input.get(0).toLowerCase() + " and " + input.get(1).toLowerCase() + ".");
+		}
+		else
+		{
+			System.out.println("a " + (ladder.size()-2) + "-rung word ladder exists between " + input.get(0).toLowerCase() + " and " + input.get(1).toLowerCase() + ".");
+			for(String s : ladder)
+				System.out.println(s);
+		}
 	}
 	
 	public static void generateNeighbors() {
