@@ -5,11 +5,15 @@ package assignment3;
 
 import static org.junit.Assert.*;
 import java.util.*;
-
-import org.junit.Test;
+import org.junit.*;
 
 public class MainTest {
 
+	@BeforeClass
+	public static void setUp() {
+		Main.initialize();
+	}
+	
 	@Test(timeout = 30000)
 	public void testInit() {
 		Main.initialize();
@@ -48,7 +52,7 @@ public class MainTest {
 		assertTrue(test.size() < 3);
 	}
 	
-	@Test
+	@Test(timeout = 30000)
 	public void noDuplicatesBFS(){
 		ArrayList<String> test = Main.getWordLadderBFS("SMART", "MONEY");
 		ArrayList<String> testDup = new ArrayList<String>();
@@ -60,21 +64,29 @@ public class MainTest {
 		assertEquals(test.size(), testDup.size());
 	}
 	
-	@Test
+	@Test(timeout = 30000)
 	public void dfsNormalTestPass() {
-		ArrayList<String> test = Main.getWordLadderDFS("FLOOD", "FRONT");
+		ArrayList<String> test = Main.getWordLadderDFS("FRONT", "FLOOD");
 		Main.printLadder(test);
 		assertFalse(test == null || test.size() == 0);
-		assertTrue(test.size() < 1000);
+		assertTrue(test.size() < 500);
 	}
 	
-	@Test
+	@Test(timeout = 30000)
 	public void dfsNormalTestFail() {
 		ArrayList<String> test = Main.getWordLadderDFS("FLOOD", "ALOOF");
 		assertTrue(test == null || test.size() == 0);
 	}
 	
-	@Test
+	@Test(timeout = 30000)
+	public void dfsTestifNeighbors() {
+		ArrayList<String> test = Main.getWordLadderDFS("CAVED", "CAVES");
+		Main.printLadder(test);
+		assertFalse(test == null || test.size() == 0);
+		assertTrue(test.size() < 3);
+	}
+	
+	@Test(timeout = 30000)
 	public void noDuplicatesDFS(){
 		ArrayList<String> test = Main.getWordLadderDFS("SMART", "MONEY");
 		ArrayList<String> testDup = new ArrayList<String>();
