@@ -3,9 +3,9 @@
  * Mohit Joshi
  * msj696
  * #16475
- * <Student2 Name>
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
+ * Ram Muthukumar
+ * rm48763
+ * #16470
  * Slip days used: <0>
  * Git URL: https://github.com/mohit-j/422C-Project3.git
  * Fall 2016
@@ -38,23 +38,18 @@ public class Main {
 			ps = System.out;					// default to Stdout
 		}
 		
-		initialize(kb);
-		generateNeighbors();
-		
-//		System.out.println(neighbors.get("HOSTS").toString());
-		printLadder(getWordLadderDFS(input.get(0), input.get(1)));
-		
+		initialize();
+		input = parse(kb);
+		printLadder(getWordLadderBFS(input.get(0), input.get(1)));
 	}
 	
-	public static void initialize(Scanner keyboard) {
+	public static void initialize() {
 		
-		if(input!=null && !input.isEmpty())
-			input.clear();
-		input = parse(keyboard);
 		words = makeDictionary();
 		bfsQueue = new LinkedList<Node>();
 		markedWords = new HashSet<String>();
 		neighbors = new HashMap<String, HashSet<String>>();
+		generateNeighbors();
 	}
 	
 	/**
@@ -78,9 +73,7 @@ public class Main {
 	
 	public static ArrayList<String> getWordLadderDFS(String start, String end) {
 		
-		// Returned list should be ordered start to end.  Include start and end.
-		// Return empty list if no ladder.
-		
+		markedWords.clear();
 		Node bottom = depthFirstSearch(new Node(start), end);
 		ArrayList<String> ladder = new ArrayList<String>();
 		Node temp = bottom;
@@ -88,14 +81,12 @@ public class Main {
 			ladder.add(0, temp.word);
 			temp = temp.parent;
 		}
-		return ladder; 
+		return shorten(ladder); 
 	}
 	
     public static ArrayList<String> getWordLadderBFS(String start, String end) {
 		
-    	// Returned list should be ordered start to end.  Include start and end.
-    	// Return empty list if no ladder.
-		
+    	markedWords.clear();
     	Node bottom = breadthFirstSearch(start, end);
 		ArrayList<String> ladder = new ArrayList<String>();
 		Node temp = bottom;
@@ -103,7 +94,7 @@ public class Main {
 			ladder.add(0, temp.word);
 			temp = temp.parent;
 		}
-		return ladder; // replace this line later with real return
+		return ladder; 
 	}
     
 	public static Set<String>  makeDictionary () {
@@ -130,9 +121,9 @@ public class Main {
 		}
 		else
 		{
-			System.out.println("a " + (ladder.size()-2) + "-rung word ladder exists between " + input.get(0).toLowerCase() + " and " + input.get(1).toLowerCase() + ".");
+			System.out.println("a " + (ladder.size()-2) + "-rung word ladder exists between " + ladder.get(0).toLowerCase() + " and " + ladder.get(ladder.size()-1).toLowerCase() + ".");
 			for(String s : ladder)
-				System.out.println(s);
+				System.out.println(s.toLowerCase());
 		}
 	}
 	
@@ -206,5 +197,29 @@ public class Main {
 				return n;
 			}
 		return null;
+	}
+	
+	public static ArrayList<String> shorten(ArrayList<String> list) {
+		
+		int start = 0;
+		int end = 0;
+		
+		outerloop:
+		for(int j=0; j<list.size(); j++)
+		{
+			for(int k=list.size()-1; k>j; k--)
+			{
+				if(neighbors.get(list.get(j)).contains(list.get(k)))
+				{
+					start = j+1;
+					end = k;
+					break outerloop;
+				}
+			}
+		}
+		
+		list.subList(start, end).clear();
+		
+		return list;
 	}
 }
