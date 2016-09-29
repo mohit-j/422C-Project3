@@ -32,8 +32,8 @@ public class Main {
 	 */
 	public static void main(String[] args) throws Exception {
 		
-		Scanner kb;	// input Scanner for commands
-		PrintStream ps;	// output file
+		Scanner kb;								// input Scanner for commands
+		PrintStream ps;							// output file
 		// If arguments are specified, read/write from/to files instead of Std IO.
 		if (args.length != 0) {
 			kb = new Scanner(new File(args[0]));
@@ -46,7 +46,7 @@ public class Main {
 		
 		initialize();
 		input = parse(kb);
-		printLadder(getWordLadderDFS(input.get(0), input.get(1)));
+		printLadder(getWordLadderBFS(input.get(0), input.get(1)));
 	}
 	
 	/**
@@ -74,7 +74,7 @@ public class Main {
 			
 			in.add(keyboard.next().toUpperCase());			//add input from console
 			if(in.get(0).equals("/QUIT") || (in.size()>1 && in.get(1).equals("/QUIT")))
-				System.exit(1);				//check if user wants to quit
+				System.exit(1);								//check if user wants to quit
 			
 		} while(in.size() < 2);
 		
@@ -99,7 +99,7 @@ public class Main {
 		}
 		if(testShorten)
 			return ladder;
-		return shorten(ladder);
+		return shorten(ladder);				//output shortened ladder
 	}
 	
     /**
@@ -252,15 +252,15 @@ public class Main {
 		int start = 0;
 		int end = 0;
 		
-		for(int j=0; j<list.size(); j++)			//iterate starting from front
+		for(int j=0; j<list.size(); j++)				//iterate starting from front
 		{
 			for(int k=list.size()-1; k>j+1; k--)		//iterate starting from back
 			{
 				if(neighbors.get(list.get(j)).contains(list.get(k)) || list.get(j).equals(list.get(k)))
-				{
-					if(k-j-1 > end-start)
+				{										//check if the two words are neighbors
+					if(k-j-1 > end-start)				//check if current range is largest
 					{
-						start = j+1;					//check if the two words are neighbors
+						start = j+1;					
 						end = k;
 					}
 				}
