@@ -205,7 +205,7 @@ public class Main {
 				if(current.word.equals(end)){				//if it equals the end word, return it
 					return current;	
 				}
-				for(String s : neighbors.get(current.word)){		
+				for(String s : neighbors.get(current.word)){
 					bfsQueue.add(new Node(s, current));				//add every neighbor to the queue
 				}
 			}

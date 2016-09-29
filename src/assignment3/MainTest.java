@@ -4,27 +4,38 @@
 package assignment3;
 
 import static org.junit.Assert.*;
-import java.util.ArrayList;
+import java.util.*;
 
 import org.junit.Test;
 
 public class MainTest {
 
-	@Test
+	@Test(timeout = 30000)
 	public void testInit() {
 		Main.initialize();
 		assertTrue(Main.words != null && Main.bfsQueue != null && Main.markedWords != null && Main.neighbors != null);
 	}
 	
-	@Test
-	public void bfsNormalTest() {
-		Main.initialize();
-		ArrayList<String> test = new ArrayList<String>();
-		test.add("FLOOD"); test.add("BLOOD"); test.add("BROOD");
-		test.add("BROOS"); test.add("BROWS"); test.add("FROWS");
-		test.add("FRONS"); test.add("FRONT");
-		ArrayList<String> test2 = Main.getWordLadderBFS("FLOOD", "FRONT");
-		assertEquals(test, test2);
+	@Test(timeout = 30000)
+	public void bfsNormalTestPass() {
+		ArrayList<String> test = Main.getWordLadderBFS("FLOOD", "FRONT");
+		Main.printLadder(test);
+		assertFalse(test == null || test.size() == 0);
+		assertTrue(test.size() < 10);
+	}
+	
+	@Test(timeout = 30000)
+	public void bfsNormalTestFail() {
+		ArrayList<String> test = Main.getWordLadderBFS("FLOOD", "ALOOF");
+		assertTrue(test == null || test.size() == 0);
+	}
+	
+	@Test(timeout = 30000)
+	public void bfsTestifNeighbors() {
+		ArrayList<String> test = Main.getWordLadderBFS("CAVED", "CAVES");
+		Main.printLadder(test);
+		assertFalse(test == null || test.size() == 0);
+		assertTrue(test.size() < 3);
 	}
 	
 	@Test
@@ -37,6 +48,16 @@ public class MainTest {
 			}
 		}
 		assertEquals(test.size(), testDup.size());
+	}
+	
+	@Test(timeout = 30000)
+	public void testParse() {
+		String input = "hello world";
+		Scanner scan = new Scanner(input);
+		ArrayList<String> expected = new ArrayList<>();
+		expected.add("HELLO");
+		expected.add("WORLD");
+		assertEquals(expected, Main.parse(scan));
 	}
 	
 	@Test
