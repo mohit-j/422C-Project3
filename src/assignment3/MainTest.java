@@ -64,6 +64,14 @@ public class MainTest {
 	}
 	
 	@Test(timeout = 30000)
+	public void bfsTestifShortest() {
+		ArrayList<String> test = Main.getWordLadderBFS("DREAM", "NUKES");
+		ArrayList<String> test2 = Main.getWordLadderBFS("NUKES", "DREAM");
+		assertFalse(test == null || test.size() == 0 || test2 == null || test2.size() == 0);
+		assertTrue(test.size() == test2.size());
+	}
+	
+	@Test(timeout = 30000)
 	public void dfsNormalTestPass() {
 		ArrayList<String> test = Main.getWordLadderDFS("FLOOD", "FRONT");
 		Main.printLadder(test);
@@ -95,5 +103,15 @@ public class MainTest {
 			}
 		}
 		assertEquals(test.size(), testDup.size());
+	}
+	
+	@Test(timeout = 30000)
+	public void dfsTestShorten() {
+		Main.testShorten = true;
+		ArrayList<String> test = Main.getWordLadderDFS("STAGE", "CHEAT");
+		Main.testShorten = false;
+		ArrayList<String> test2 = Main.getWordLadderDFS("STAGE", "CHEAT");
+		assertFalse(test == null || test.size() == 0 || test2 == null || test2.size() == 0);
+		assertTrue(test.size() > test2.size());
 	}
 }

@@ -23,6 +23,7 @@ public class Main {
 	public static Queue<Node> bfsQueue;
 	public static Set<String> markedWords;
 	public static HashMap<String, HashSet<String>> neighbors;
+	public static boolean testShorten = false;
 	
 	/**
 	 * This method connects the scanner to the keyboard and runs a test case of printLadder()
@@ -96,7 +97,9 @@ public class Main {
 			ladder.add(0, temp.word);		//add to ladder
 			temp = temp.parent;				//move on to the previous word
 		}
-		return shorten(ladder); 
+		if(testShorten)
+			return ladder;
+		return shorten(ladder);
 	}
 	
     /**
