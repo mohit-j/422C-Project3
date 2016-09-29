@@ -87,6 +87,7 @@ public class Main {
     public static ArrayList<String> getWordLadderBFS(String start, String end) {
 		
     	markedWords.clear();
+    	bfsQueue.clear();
     	Node bottom = breadthFirstSearch(start, end);
 		ArrayList<String> ladder = new ArrayList<String>();
 		Node temp = bottom;
