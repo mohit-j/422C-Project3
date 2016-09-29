@@ -210,7 +210,7 @@ public class Main {
 		{
 			for(int k=list.size()-1; k>j; k--)
 			{
-				if(neighbors.get(list.get(j)).contains(list.get(k)))
+				if(neighbors.get(list.get(j)).contains(list.get(k)) || list.get(j).equals(list.get(k)))
 				{
 					start = j+1;
 					end = k;
