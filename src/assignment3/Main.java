@@ -45,7 +45,7 @@ public class Main {
 		
 		initialize();
 		input = parse(kb);
-		printLadder(getWordLadderBFS(input.get(0), input.get(1)));
+		printLadder(getWordLadderDFS(input.get(0), input.get(1)));
 	}
 	
 	/**
@@ -88,7 +88,7 @@ public class Main {
 	 */
 	public static ArrayList<String> getWordLadderDFS(String start, String end) {
 		
-		markedWords.clear();
+		markedWords = new HashSet<String>();
 		Node bottom = depthFirstSearch(new Node(start), end);
 		ArrayList<String> ladder = new ArrayList<String>();
 		Node temp = bottom;					//start at ending word
@@ -107,8 +107,8 @@ public class Main {
      */
 	public static ArrayList<String> getWordLadderBFS(String start, String end) {
 		
-    	markedWords.clear();
-    	bfsQueue.clear();
+		markedWords = new HashSet<String>();
+		bfsQueue = new LinkedList<Node>();
     	Node bottom = breadthFirstSearch(start, end);
 		ArrayList<String> ladder = new ArrayList<String>();
 		Node temp = bottom;					//start at ending word

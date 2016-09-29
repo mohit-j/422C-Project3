@@ -17,6 +17,16 @@ public class MainTest {
 	}
 	
 	@Test(timeout = 30000)
+	public void testParse() {
+		String input = "hello world";
+		Scanner scan = new Scanner(input);
+		ArrayList<String> expected = new ArrayList<>();
+		expected.add("HELLO");
+		expected.add("WORLD");
+		assertEquals(expected, Main.parse(scan));
+	}
+	
+	@Test(timeout = 30000)
 	public void bfsNormalTestPass() {
 		ArrayList<String> test = Main.getWordLadderBFS("FLOOD", "FRONT");
 		Main.printLadder(test);
@@ -50,14 +60,18 @@ public class MainTest {
 		assertEquals(test.size(), testDup.size());
 	}
 	
-	@Test(timeout = 30000)
-	public void testParse() {
-		String input = "hello world";
-		Scanner scan = new Scanner(input);
-		ArrayList<String> expected = new ArrayList<>();
-		expected.add("HELLO");
-		expected.add("WORLD");
-		assertEquals(expected, Main.parse(scan));
+	@Test
+	public void dfsNormalTestPass() {
+		ArrayList<String> test = Main.getWordLadderDFS("FLOOD", "FRONT");
+		Main.printLadder(test);
+		assertFalse(test == null || test.size() == 0);
+		assertTrue(test.size() < 1000);
+	}
+	
+	@Test
+	public void dfsNormalTestFail() {
+		ArrayList<String> test = Main.getWordLadderDFS("FLOOD", "ALOOF");
+		assertTrue(test == null || test.size() == 0);
 	}
 	
 	@Test
