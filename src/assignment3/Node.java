@@ -14,20 +14,20 @@
 package assignment3;
 
 public class Node {
-	String word;
-	Node parent;
+	String word;	//contains the word
+	Node parent;	//contains the parent node
 	
 	public Node(){
 		word = "";
 		parent = null;
 	}
 	
-	public Node(String root){
+	public Node(String root){	//use this to construct top node
 		word = root;
 		parent = null;
 	}
 	
-	public Node(String w, Node p){
+	public Node(String w, Node p){	//use this to construct node with parent
 		word = "";
 		word += w.toUpperCase();
 		parent = p;
