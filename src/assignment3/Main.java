@@ -249,16 +249,17 @@ public class Main {
 		int start = 0;
 		int end = 0;
 		
-		outerloop:
 		for(int j=0; j<list.size(); j++)			//iterate starting from front
 		{
-			for(int k=list.size()-1; k>j; k--)		//iterate starting from back
+			for(int k=list.size()-1; k>j+1; k--)		//iterate starting from back
 			{
 				if(neighbors.get(list.get(j)).contains(list.get(k)) || list.get(j).equals(list.get(k)))
 				{
-					start = j+1;					//check if the two words are neighbors
-					end = k;
-					break outerloop;
+					if(k-j-1 > end-start)
+					{
+						start = j+1;					//check if the two words are neighbors
+						end = k;
+					}
 				}
 			}
 		}

@@ -16,7 +16,6 @@ public class MainTest {
 	
 	@Test(timeout = 30000)
 	public void testInit() {
-		Main.initialize();
 		assertTrue(Main.words != null && Main.bfsQueue != null && Main.markedWords != null && Main.neighbors != null);
 	}
 	
@@ -40,7 +39,7 @@ public class MainTest {
 	
 	@Test(timeout = 30000)
 	public void bfsNormalTestFail() {
-		ArrayList<String> test = Main.getWordLadderBFS("FLOOD", "ALOOF");
+		ArrayList<String> test = Main.getWordLadderBFS("EMBER", "ALOOF");
 		assertTrue(test == null || test.size() == 0);
 	}
 	
@@ -66,7 +65,7 @@ public class MainTest {
 	
 	@Test(timeout = 30000)
 	public void dfsNormalTestPass() {
-		ArrayList<String> test = Main.getWordLadderDFS("FRONT", "FLOOD");
+		ArrayList<String> test = Main.getWordLadderDFS("FLOOD", "FRONT");
 		Main.printLadder(test);
 		assertFalse(test == null || test.size() == 0);
 		assertTrue(test.size() < 500);
@@ -74,7 +73,7 @@ public class MainTest {
 	
 	@Test(timeout = 30000)
 	public void dfsNormalTestFail() {
-		ArrayList<String> test = Main.getWordLadderDFS("FLOOD", "ALOOF");
+		ArrayList<String> test = Main.getWordLadderDFS("EMBER", "ALOOF");
 		assertTrue(test == null || test.size() == 0);
 	}
 	
