@@ -26,5 +26,28 @@ public class MainTest {
 		ArrayList<String> test2 = Main.getWordLadderBFS("FLOOD", "FRONT");
 		assertEquals(test, test2);
 	}
-
+	
+	@Test
+	public void noDuplicatesBFS(){
+		ArrayList<String> test = Main.getWordLadderBFS("SMART", "MONEY");
+		ArrayList<String> testDup = new ArrayList<String>();
+		for(int i = 0; i < test.size(); i++){
+			if(!testDup.contains(test.get(i))){
+				testDup.add(test.get(i));
+			}
+		}
+		assertEquals(test.size(), testDup.size());
+	}
+	
+	@Test
+	public void noDuplicatesDFS(){
+		ArrayList<String> test = Main.getWordLadderDFS("SMART", "MONEY");
+		ArrayList<String> testDup = new ArrayList<String>();
+		for(int i = 0; i < test.size(); i++){
+			if(!testDup.contains(test.get(i))){
+				testDup.add(test.get(i));
+			}
+		}
+		assertEquals(test.size(), testDup.size());
+	}
 }
